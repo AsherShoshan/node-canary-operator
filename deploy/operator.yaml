@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-canary-operator
+  namespace: TARGET_NAMESPACE
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: node-canary-operator
+  template:
+    metadata:
+      labels:
+        name: node-canary-operator
+    spec:
+      serviceAccountName: node-canary-operator
+      containers:
+        - name: node-canary-operator
+          #v0.0.1 10/8/19
+          image: docker.io/ashershoshan/node-canary-operator@sha256:f024f7799201cdeaa50ed5178c04de1971d789d8b835f1b4bdb5489249178e2f
+          #v0.0.2 14/8/19
+          image: docker.io/ashershoshan/node-canary-operator@sha256:4eecf941bf8c4d1c0aee6cfec15cf2b02b69cf09c20ca8b325d0acfa330986b5
+          imagePullPolicy: IfNotPresent 
+          command:
+          - node-canary-operator
+          env:
+            - name: WATCH_NAMESPACE
+              value: ""
+              #valueFrom:
+                #fieldRef:
+                  #fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "node-canary-operator"
