@@ -11,15 +11,14 @@ so other operators can watch this special taint, and start drain implied actions
 Master nodes, are also supported, once the master node becomes schedulable. i.e (taint master node-role.kubernetes.io/master-)
 
 
-# Installation:
+Install
+-------
+export TARGET_NAMESPACE=your-target-namespace     (default to openshift-operators)
 
-kubectl apply -f https://github.com/AsherShoshan/node-canary-operator/blob/master/deploy/service_account.yaml
+curl -k https://raw.githubusercontent.com/AsherShoshan/node-canary-operator/master/deploy.sh | bash
 
-kubectl apply -f https://github.com/AsherShoshan/node-canary-operator/blob/master/deploy/role.yaml
+Uninstall
+---------
+export TARGET_NAMESPACE=your-target-namespace     (default to openshift-operators)
 
-kubectl apply -f https://github.com/AsherShoshan/node-canary-operator/blob/master/deploy/role_binding.yaml
-
-kubectl apply -f https://github.com/AsherShoshan/node-canary-operator/blob/master/deploy/operator.yaml
-
-
-Make sure to adjust namespace value in service_account.yaml, role_binding.yaml, and "WATCH_NAMESPACE" in operator.yaml
+curl -k https://raw.githubusercontent.com/AsherShoshan/node-canary-operator/master/undeploy.sh | bash
